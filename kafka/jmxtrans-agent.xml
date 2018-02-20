@@ -1,0 +1,14 @@
+<jmxtrans-agent>
+    <queries>
+        <query objectName="kafka.server:type=ReplicaManager,name=*" atribute="value" resultAlias="%name%"/>
+    </queries>
+    <outputWriter class="org.jmxtrans.agent.ConsoleOutputWriter"/>
+    <collectIntervalInSeconds>20</collectIntervalInSeconds>
+    <outputWriter class="org.jmxtrans.agent.influxdb.InfluxDbOutputWriter">
+        <url>http://docker-statsd-influxdb-grafana:8086</url>
+        <database>${influxdb:telegraf}</database>
+        <user>${influxuser:telegraf}</user>
+        <password>${influxpuss:telegraf}</password>
+        <tags>host=#hostname#</tags>
+    </outputWriter>
+</jmxtrans-agent>
